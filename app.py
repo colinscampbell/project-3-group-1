@@ -30,4 +30,4 @@ St_Cd = Base.classes.State_Code
 join = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
 
 df = pd.read_sql_query(join, session.bind)
-df
+print(df)
