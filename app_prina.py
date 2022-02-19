@@ -2,10 +2,9 @@ import os
 #from dotenv import load_dotenv
 #load_dotenv()
 from sqlalchemy.sql import func
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func, or_
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
 import matplotlib.pyplot as plt
 from sqlalchemy import Column, Integer, String, Float
 import numpy as np
@@ -31,35 +30,46 @@ Base = automap_base()
 Base.prepare(engines, reflect=True)
 session = Session(conn)
 Base.classes.keys()
+# Save reference to the table
+print(Base.classes.keys())
 
-Wtr = Base.classes.Weather_Raw
-St_Cd = Base.classes.State_Code
-join = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+Wtr = Base.classes.weather_data_project
+wtr_data = session.query( Wtr).statement
 
-df = pd.read_sql_query(join, session.bind)
+df = pd.read_sql_query(wtr_data, session.bind)
 df
 
 #################################################
 # Flask Setup
 #################################################
-#app = Flask(__name__)
+app = Flask(__name__)
 
 
 # ---------------------------------------------------------
 # Web site
-#@app.route("/")
-#def home():
-#    return render_template("index.html")
+@app.route("/")
+def weather_html():
+   return render_template("index.html")
 
     # ---------------------------------------------------------
 # API
-#@app.route("/api/weather")
-#def weather_grid():
-#    session = Session(engine)
-#    results = session.query(St_Cd.state).all()
-#    results = [list(r) for r in results]
-#    table_results = {
-#        "table": results
-#    }
-#    session.close()
-#    return jsonify(table_results)
+@app.route("/api/weather")
+
+def weather_grid():
+    session = Session(engines)
+    results = session.query(Wtr.Jan_Avg,Wtr.State).all()
+
+    results = [list(r) for r in results]
+
+    table_results = {
+        "table": results
+    }
+
+    print(table_results)
+    session.close()
+
+    return jsonify(table_results)
+    
+
+if __name__ == "__main__":
+    app.run()
