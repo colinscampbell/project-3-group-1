@@ -56,58 +56,46 @@ app = Flask(__name__)
 # Flask Routes
 #################################################
 
+# Home/Index #####################################
 @app.route("/")
 def home():
     return render_template("index.html")
 
-#################################################
-# BAR CHART #####################################
-@app.route("/weather_bar")
+# API database #####################################
+@app.route("/api/weather")
 
-def bar_chart():
-    # Create our session (link) from Python to the DB
+def weather_grid():
     session = Session(engines)
-    """Return a list of all passenger names"""
-    # Query all passengers
-    # results = session.query(Passenger.name).all()
-    results = session.query(Wtr).all()
+    results = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+    df = pd.read_sql_query(results, session.bind)
 
+    States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+    df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+    df1 = df1.drop(['Element' , 'County', 'Code'] ,  axis=1)
+
+    df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+    df_avg = df_avg.reset_index()
+   # print(df_avg)
+
+    df_json = df_avg.to_json(orient='records')
+    #[1:-1].replace('},{', '} {')
+    #print(df_json)
+
+    #results = session.query(Wtr.State,Wtr.Year,Wtr.Jan_Avg,Wtr.Feb_Avg, Wtr.Mar_Avg, Wtr.Apr_Avg,Wtr.May_Avg,Wtr.Jun_Avg,Wtr.Jul_Avg,Wtr.Aug_Avg,Wtr.Sep_Avg,Wtr.Oct_Avg,Wtr.Nov_Avg,Wtr.Dec_Avg).all()
+
+   # results = [list(r) for r in df_json]
+    #results = [dict(r) for r in df_json]
+    #table_results = {
+    #    "table": results
+    #}
+
+    #print(table_results)
     session.close()
 
-    # # Convert list of tuples into normal list
-    # all_names = list(np.ravel(results))
+    #return jsonify(table_results)
+    #return jsonify(df_json)
+    return df_json
 
-    # return jsonify(all_names)
-
-
+# RUN FLASK #####################################
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# // // ----------------INIT and GRAPHS ------------------------
-# function init_plot_graphs(){
-#    d3.json(url).then(function(data) {
-#         sample_values =  data.samples[0].sample_values.slice(0,10).reverse();
-#         console.log(`OTU Value ${sample_values}`);
-#         otu_ids =  data.samples[0].otu_ids.slice(0,10);
-#         console.log (`OTU ID ${otu_ids}`); 
-#         otu_labels = data.samples[0].otu_labels.slice(0,10);
-#         console.log(`OTU label ${otu_labels}`);
-#         yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
-
-#     // // -----BAR GRAPH PLOT OTU sample values
-#         let data2 = [{
-#           x: sample_values,
-#           y: yticks,
-#           text: otu_labels,
-#           type: "bar",
-#           orientation: "h"
-#         }];
-
-#         var layout = {
-#           height: 600,
-#           width: 1050
-#         };
-
-#       Plotly.newPlot("bar", data2, layout);
-#       console.log("bar working");
