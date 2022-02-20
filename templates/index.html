@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Bellybutton Biodiversity</title>
+  <title>10 States Average Annual Temperature</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/style.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static', filename='css/styles.css') }}">
 </head>
 
 <body>
@@ -15,8 +15,9 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12 jumbotron text-center">
-        <h1>Belly Button Biodiversity Dashboard</h1>
+        <h1>10 States Average Annual Temperature</h1>
         <p>Use the interactive charts below to explore the dataset</p>
+        <a href = "/weather_bar ">bar chart</a>
       </div>
     </div>
     <div class="row">
@@ -34,6 +35,7 @@
       </div>
       <div class="col-md-5">
         <div id="bar"></div>
+        BAR BAR BAR
       </div>
       <div class="col-md-5">
         <div id="gauge"></div>
@@ -48,7 +50,7 @@
 
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="./static/js/app.js"></script>
+  <script src="../static/js/bar_graph.js"></script>
   <!-- <script src="./static/js/bonus.js"></script> -->
 </body>
 
