@@ -30,20 +30,28 @@ Base = automap_base()
 Base.prepare(engines, reflect=True)
 session = Session(conn)
 Base.classes.keys()
-# Save reference to the table
-print(Base.classes.keys())
+# Performs database schema inspection
+#insp = sqlalchemy.inspect(engines)
+#print(insp.get_table_names())
+Wtr = Base.classes.Weather_Raw
+St_Cd = Base.classes.State_Code
+join = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+df = pd.read_sql_query(join, session.bind)
 
-Wtr = Base.classes.weather_data_project
-wtr_data = session.query( Wtr).statement
+States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+df1 = df1.drop(['Element' , 'County', 'Code'] ,  axis=1)
 
-df = pd.read_sql_query(wtr_data, session.bind)
-df
+df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+df_avg = df1.drop(['State_1'] ,  axis=1)
+
 
 #################################################
 # Flask Setup
 #################################################
 app = Flask(__name__)
-
+print(__name__)
+print(__file__)
 
 # ---------------------------------------------------------
 # Web site
@@ -51,25 +59,32 @@ app = Flask(__name__)
 def weather_html():
    return render_template("index.html")
 
-    # ---------------------------------------------------------
+@app.route("/data_table")
+def data():
+
+    return render_template("data_table.html")
+
 # API
-@app.route("/api/weather")
+@app.route("/api/weather_table")
 
 def weather_grid():
     session = Session(engines)
-    results = session.query(Wtr.Jan_Avg,Wtr.State).all()
+    results = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+    df = pd.read_sql_query(results, session.bind)
 
-    results = [list(r) for r in results]
+    States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+    df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+    df1 = df1.drop(['Element' , 'County', 'Code','State'] ,  axis=1)
 
-    table_results = {
-        "table": results
-    }
+    df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+    
+    df_avg = df_avg.reset_index()
 
-    print(table_results)
+    df_list = df_avg.values.tolist() # convert data frame to list as datatables only accepts list
+
     session.close()
 
-    return jsonify(table_results)
-    
+    return jsonify(df_list)
 
 if __name__ == "__main__":
-    app.run()
+    app.run()   
