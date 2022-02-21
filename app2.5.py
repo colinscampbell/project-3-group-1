@@ -71,17 +71,30 @@ def weather_grid():
 
     States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
     df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
-    df1 = df1.drop(['Element' , 'County', 'Code','State'] ,  axis=1)
+    df1 = df1.drop(['Element' , 'County', 'Code'] ,  axis=1)
 
     df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
-    
     df_avg = df_avg.reset_index()
+   # print(df_avg)
 
-    df_list = df_avg.values.tolist() # convert data frame to list as datatables only accepts list
+    df_json = df_avg.to_json(orient='records')
+    #[1:-1].replace('},{', '} {')
+    #print(df_json)
 
+    #results = session.query(Wtr.State,Wtr.Year,Wtr.Jan_Avg,Wtr.Feb_Avg, Wtr.Mar_Avg, Wtr.Apr_Avg,Wtr.May_Avg,Wtr.Jun_Avg,Wtr.Jul_Avg,Wtr.Aug_Avg,Wtr.Sep_Avg,Wtr.Oct_Avg,Wtr.Nov_Avg,Wtr.Dec_Avg).all()
+
+   # results = [list(r) for r in df_json]
+    #results = [dict(r) for r in df_json]
+    #table_results = {
+    #    "table": results
+    #}
+
+    #print(table_results)
     session.close()
 
-    return jsonify(df_list)
+    #return jsonify(table_results)
+    #return jsonify(df_json)
+    return df_json
 
 # RUN FLASK #####################################
 if __name__ == '__main__':

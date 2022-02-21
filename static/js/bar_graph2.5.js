@@ -17,6 +17,11 @@ const url = "api/weather";
 
 function init_plot_graphs(){
   d3.json(url).then(function(data) {
+    var data_keys = Object.keys(data);
+    console.log(`this is data keys: ${data_keys}`);
+
+    var datastate_keys = Object.keys(data[0].State);
+    console.log(`this is data State keys: ${datastate_keys}`);
  
     // sample_values =  data.samples[0].sample_values.slice(0,10).reverse();
     // console.log(`OTU Value ${sample_values}`);
@@ -29,21 +34,17 @@ function init_plot_graphs(){
   //  REF -- > https://plotly.com/javascript/bar-charts/ < -- REF
       console.log(`LINE35: Start plot bar graph`);
 
-      state1 = String(data[0].slice(0,1));
-      state2 = String(data[10].slice(0,1));
-      year = String(data[0].slice(0,1));
+      state1 = data[0].State_1;
+      state2 = data[19].State_1;
+      // console.log(state2);
+      // console.log(state1);
 
-      console.log(`This is state1: ${state1}`);
-      console.log(state2);
-      
-      months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-      state1_temp = (data[0].slice(2,14));
-      state2_temp = (data[10].slice(2,14));
-
-      console.log(`This is State1_temp ${state1_temp}`);
+      month_year = ["2010","2011","2012","2013"];
+      state1_temp = [45,50,75,100];
+      state2_temp = [-5, 10, 20, 5];
 
       let trace1 = {
-        x: months,
+        x: month_year,
         y: state1_temp,
         name: state1,
         type: "bar"
@@ -51,7 +52,7 @@ function init_plot_graphs(){
 
         //     //   // Create our second trace
       let trace2 = {
-        x: months,
+        x: month_year,
         y: state2_temp,
         name: state2,
         type: "bar"
@@ -79,8 +80,7 @@ d3.select("#selDataset").on("change", dropdown_populate);
 
 // This function is called when a dropdown menu item is selected
 function dropdown_populate() {
-  console.log(`LINE79: Start dropdown_populate()`);  
-  // Use D3 to select the dropdown menu
+    // Use D3 to select the dropdown menu
     var dropdownMenu0 = d3.select("#selDataset0");
     var dropdownMenu1 = d3.select("#selDataset1");
     var dropdownMenu2 = d3.select("#selDataset2");
@@ -94,22 +94,29 @@ function dropdown_populate() {
       var list_statename = [];
       for (var i = 0; i < data.length; i += 10) {  
         // console.log(data[i].State_1)
-        list_statename.push(data[i].slice(0,1))
-        dropdownMenu0.append("option").text(data[i].slice(0,1)).property("value")
-        dropdownMenu1.append("option").text(data[i].slice(0,1)).property("value")
+        list_statename.push(data[i].State_1)
+        dropdownMenu0.append("option").text(data[i].State_1).property("value")
+        dropdownMenu1.append("option").text(data[i].State_1).property("value")
       }
+
+      // var list_statename = [];
+      // for (var i = 0; i < data.length; i += 10) {  
+      //   // console.log(data[i].State_1)
+      //   list_statename.push(data[i].State_1)
+      //   dropdownMenu1.append("option").text(data[i].State_1).property("value")
+      // }
 
       var list_years = [];
       for (var i = 0; i < 10; i++) {  
         // console.log(data[i].Year)
-        list_years.push(data[i].slice(1,2))
-        dropdownMenu2.append("option").text(data[i].slice(1,2)).property("value")
+        list_years.push(data[i].Year)
+        dropdownMenu2.append("option").text(data[i].Year).property("value")
       }
 
       console.log(`Statename: ${list_statename}`);
       console.log(`Years: ${list_years}`);
 
-      console.log(`LINE109: END dropdown_populate()`);  
+      console.log('dropdown append running');
 
     // create variable that calls data AFTER fetch data
     // var dataset = dropdownMenu.property("value");
