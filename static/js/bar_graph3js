@@ -18,24 +18,30 @@ const url = "api/weather";
 function init_plot_graphs(){
   d3.json(url).then(function(data) {
  
+    // sample_values =  data.samples[0].sample_values.slice(0,10).reverse();
+    // console.log(`OTU Value ${sample_values}`);
+    // otu_ids =  data.samples[0].otu_ids.slice(0,10);
+    // console.log (`OTU ID ${otu_ids}`); 
+    // otu_labels = data.samples[0].otu_labels.slice(0,10);
+    // console.log(`OTU label ${otu_labels}`);
+    // yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
   // // -----BAR GRAPH PLOT--------------------
   //  REF -- > https://plotly.com/javascript/bar-charts/ < -- REF
-      // console.log(`LINE35: Start plot bar graph`);
+      console.log(`LINE35: Start plot bar graph`);
 
       state1 = String(data[0].slice(0,1));
       state2 = String(data[10].slice(0,1));
-      year = String(data[0].slice(1,2));
+      year = String(data[0].slice(0,1));
 
-      // console.log(`This is state1: ${state1}`);
-      // console.log(state2);
+      console.log(`This is state1: ${state1}`);
+      console.log(state2);
       
       months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       state1_temp = (data[0].slice(2,14));
       state2_temp = (data[10].slice(2,14));
 
-      // console.log(`This is State1_temp ${state1_temp}`);
+      console.log(`This is State1_temp ${state1_temp}`);
 
-      // Create our first trace
       let trace1 = {
         x: months,
         y: state1_temp,
@@ -43,7 +49,7 @@ function init_plot_graphs(){
         type: "bar"
         };
 
-        // Create our second trace
+        //     //   // Create our second trace
       let trace2 = {
         x: months,
         y: state2_temp,
@@ -54,8 +60,7 @@ function init_plot_graphs(){
       var layout = {
         height: 600,
         width: 800,
-        barmode: 'group',
-        title: `${state1} vs ${state2} | ${year}`
+        barmode: 'group'
       };
             
       // The data array consists of both traces
@@ -74,72 +79,44 @@ d3.select("#selDataset").on("change", dropdown_populate);
 
 // This function is called when a dropdown menu item is selected
 function dropdown_populate() {
+  console.log(`LINE79: Start dropdown_populate()`);  
   // Use D3 to select the dropdown menu
     var dropdownMenu0 = d3.select("#selDataset0");
     var dropdownMenu1 = d3.select("#selDataset1");
     var dropdownMenu2 = d3.select("#selDataset2");
+    // Assign the value of the dropdown menu option to a variable
+    console.log('LINE86 dropdown_populate function running');
 
-// Assign the value of the dropdown menu option to a variable
 // Fetch the JSON data and console log it
     d3.json(url).then((data) => {
+      // console.log(`LINE90 Data Length: ${data.length}`);
       
+      var list_statename = [];
       for (var i = 0; i < data.length; i += 10) {  
         // console.log(data[i].State_1)
+        list_statename.push(data[i].slice(0,1))
         dropdownMenu0.append("option").text(data[i].slice(0,1)).property("value")
         dropdownMenu1.append("option").text(data[i].slice(0,1)).property("value")
       }
 
+      var list_years = [];
       for (var i = 0; i < 10; i++) {  
         // console.log(data[i].Year)
+        list_years.push(data[i].slice(1,2))
         dropdownMenu2.append("option").text(data[i].slice(1,2)).property("value")
       }
 
-      // console.log(`Statename: ${list_statename}`);
-      // console.log(`Years: ${list_years}`);
-      // console.log(`LINE109: END dropdown_populate()`);  
+      console.log(`Statename: ${list_statename}`);
+      console.log(`Years: ${list_years}`);
+
+      console.log(`LINE109: END dropdown_populate()`);  
 
     // create variable that calls data AFTER fetch data
-    var dataset0 = dropdownMenu0.property("value");
-    var dataset1 = dropdownMenu1.property("value");
-    var dataset2 = dropdownMenu2.property("value");
-    // demo_info(dataset0);
-    // updatechart(dataset0);
-    console.log(`This is dataset: ${dataset0}`);
-    console.log(`This is dataset: ${dataset1}`);
-    console.log(`This is dataset: ${dataset2}`);
+    // var dataset = dropdownMenu.property("value");
+    // demo_info(dataset);
+    // updatechart(dataset);
+    // console.log(`This is dataset: ${dataset}`);
   });
 }
-
-
-// ////////////////////////////////////////////////////////
-// // ------------------update graphs using LISTENER-------
-function updatechart(h, i, j){
-  d3.json(url).then((data) =>{
-
-      x = (element) => element == h
-      sample_index = data.slice(0,1).findIndex(x);
-
-      console.log(`Sample Index: ${sample_index}`)
-
-      sample_values =  data.samples[sample_index].sample_values.slice(0,10).reverse();
-      otu_ids =  data.samples[sample_index].otu_ids.slice(0,10);
-      yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
-      otu_labels = data.samples[sample_index].otu_labels.slice(0,10);
-  
-      // console.log(`SampleValues: ${sample_values}`)
-      // console.log(`otu_ids: ${otu_ids}`)
-      // console.log(`otu_labels: ${otu_labels}`)
-      
-      Plotly.restyle("bar","x", [sample_values]);
-      Plotly.restyle("bar","labels", [otu_ids]);
-      Plotly.restyle("bar","y", [yticks]);
-      Plotly.restyle("bar","text", [otu_labels]);
-  
-      Plotly.restyle("bubble", "x", [otu_ids]);
-      Plotly.restyle("bubble","y",[sample_values])
-      // Plotly.newPlot("bubble", data3, layout2);
-  });
-}
-
 
   init_plot_graphs()
