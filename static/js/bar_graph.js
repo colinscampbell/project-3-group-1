@@ -62,7 +62,6 @@ function init_plot_graphs(){
       let bar_data = [trace1, trace2];
 
       Plotly.newPlot("bar", bar_data, layout);
-      console.log(`LINE71: End plot bar graph`);
     });
 
     dropdown_populate()
@@ -103,7 +102,7 @@ function dropdown_populate() {
     var dataset1 = dropdownMenu1.property("value");
     var dataset2 = dropdownMenu2.property("value");
     // demo_info(dataset0);
-    // updatechart(dataset0);
+    updatechart(dataset0);
     console.log(`This is dataset: ${dataset0}`);
     console.log(`This is dataset: ${dataset1}`);
     console.log(`This is dataset: ${dataset2}`);
@@ -113,33 +112,42 @@ function dropdown_populate() {
 
 // ////////////////////////////////////////////////////////
 // // ------------------update graphs using LISTENER-------
-function updatechart(h, i, j){
-  d3.json(url).then((data) =>{
+function updatechart(subjectid){
+  d3.json(url).then((data) => {
+    
+    target_index = data.findIndex(subjectid){  
+      for (var i = 0; i < data.length; i++) {
+        text(data[i].slice(0,1)) == subjectid && data[i].slice(1,2) == 2012;
+        }
+      }
 
-      x = (element) => element == h
+      console.log(`targetIndex: ${target_index}`);
+      console.log(`subjectID: ${subjectid}`);
+
+      x = (element) => element == subjectid
       sample_index = data.slice(0,1).findIndex(x);
 
-      console.log(`Sample Index: ${sample_index}`)
+      console.log(`Sample Index: ${sample_index}`);
 
-      sample_values =  data.samples[sample_index].sample_values.slice(0,10).reverse();
-      otu_ids =  data.samples[sample_index].otu_ids.slice(0,10);
-      yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
-      otu_labels = data.samples[sample_index].otu_labels.slice(0,10);
+
+      // sample_values =  data.samples[sample_index].sample_values.slice(0,10).reverse();
+      // otu_ids =  data.samples[sample_index].otu_ids.slice(0,10);
+      // yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
+      // otu_labels = data.samples[sample_index].otu_labels.slice(0,10);
   
       // console.log(`SampleValues: ${sample_values}`)
       // console.log(`otu_ids: ${otu_ids}`)
       // console.log(`otu_labels: ${otu_labels}`)
       
-      Plotly.restyle("bar","x", [sample_values]);
-      Plotly.restyle("bar","labels", [otu_ids]);
-      Plotly.restyle("bar","y", [yticks]);
-      Plotly.restyle("bar","text", [otu_labels]);
+      // Plotly.restyle("bar","x", [sample_values]);
+      // Plotly.restyle("bar","labels", [otu_ids]);
+      // Plotly.restyle("bar","y", [yticks]);
+      // Plotly.restyle("bar","text", [otu_labels]);
   
-      Plotly.restyle("bubble", "x", [otu_ids]);
-      Plotly.restyle("bubble","y",[sample_values])
+      // Plotly.restyle("bubble", "x", [otu_ids]);
+      // Plotly.restyle("bubble","y",[sample_values])
       // Plotly.newPlot("bubble", data3, layout2);
   });
 }
-
 
   init_plot_graphs()
