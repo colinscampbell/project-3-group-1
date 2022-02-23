@@ -6,33 +6,23 @@
     <title>US Weather Data Table</title>
   
     
-    <!-- Leaflet JavaScript code -->
-    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
-
-       <!-- D3 library -->
+        <!-- D3 library -->
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin="" />
- 
-    <!-- below bootstrap added by prina -->
+      <!-- below bootstrap added by prina -->
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
    
     <!-- Our CSS  -->
     <link rel="stylesheet" href="./static/css/style.css" />
 
-
     <div class="container">
 
       <div class="row">
     
-        <div class="col-md-7">
-    
-          <br>
-          <h3>Weather</h3>
-          <hr>
-          <img class="left-image" src="../Images/weather.png">
-    
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Weather Visualization Chart</h1>
+          <p>Explore the weather for 10 states and 10 years</p>
+          <p>Created By: Colin, Etienne, Hamilton, Jason, Jorge, Prina</p>
         </div>
 
   </head>
@@ -50,7 +40,7 @@
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/data_table">Data_Table</a>
+              <a class="nav-link" href="/weather_table">Weather_Table</a>
             </li>
            </ul>
         </div>
@@ -60,18 +50,12 @@
 
     <div id="map"></div>
 
-    <!-- JavaScript file -->
-    <!--<script type="text/javascript" src="static/js/just-crime.js"></script>-->
-    <!-- <script type="text/javascript" src="static/js/heatmap.js"></script> -->
-
     <!-- Below Added by Prina -->
     <div class="container">
       <h2>Bar and Line Graph</h2>
       <hr>
      </div>
     <br>
-    
-
 
   </body>
 

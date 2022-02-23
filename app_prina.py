@@ -50,8 +50,6 @@ df_avg = df1.drop(['State_1'] ,  axis=1)
 # Flask Setup
 #################################################
 app = Flask(__name__)
-print(__name__)
-print(__file__)
 
 # ---------------------------------------------------------
 # Web site
@@ -59,10 +57,9 @@ print(__file__)
 def weather_html():
    return render_template("index.html")
 
-@app.route("/data_table")
+@app.route("/weather_table")
 def data():
-
-    return render_template("data_table.html")
+    return render_template("weather_table.html")
 
 # API
 @app.route("/api/weather_table")
