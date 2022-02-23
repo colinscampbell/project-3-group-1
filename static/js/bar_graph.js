@@ -69,7 +69,7 @@ function init_plot_graphs(){
 
 // ////////////////////////////////////////////////////////
 // // ---------------------Drop Down LISTENER ------------------
-d3.select("#selDataset").on("change", dropdown_populate);
+d3.select("#selDataset0").on("change", dropdown_populate);
 
 // This function is called when a dropdown menu item is selected
 function dropdown_populate() {
@@ -101,43 +101,48 @@ function dropdown_populate() {
     var dataset0 = dropdownMenu0.property("value");
     var dataset1 = dropdownMenu1.property("value");
     var dataset2 = dropdownMenu2.property("value");
-    // demo_info(dataset0);
-    updatechart(dataset0);
-    console.log(`This is dataset: ${dataset0}`);
-    console.log(`This is dataset: ${dataset1}`);
-    console.log(`This is dataset: ${dataset2}`);
+  
+    updatechart(dataset0, dataset1, dataset2);
+  
+    // console.log(`This is dataset: ${dataset0}`);
+    // console.log(`This is dataset: ${dataset1}`);
+    // console.log(`This is dataset: ${dataset2}`);
   });
 }
 
 
 // ////////////////////////////////////////////////////////
 // // ------------------update graphs using LISTENER-------
-function updatechart(subjectid){
-  d3.json(url).then((data) => {
-    
-    target_index = data.findIndex(subjectid){  
-      for (var i = 0; i < data.length; i++) {
-        text(data[i].slice(0,1)) == subjectid && data[i].slice(1,2) == 2012;
-        }
+function updatechart(subjectid0, subjectid1, subjectid2){
+  d3.json(url).then((data) => {    
+          
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].slice(0,1) == subjectid0 && data[i].slice(1,2) == subjectid2){
+        target_index1 = i;
       }
+    }
 
-      console.log(`targetIndex: ${target_index}`);
-      console.log(`subjectID: ${subjectid}`);
+    for (var j = 0; j < data.length; j++) {
+      if (data[j].slice(0,1) == subjectid1 && data[j].slice(1,2) == subjectid2){
+        target_index2 = j;
+      }
+    }
 
-      x = (element) => element == subjectid
-      sample_index = data.slice(0,1).findIndex(x);
-
-      console.log(`Sample Index: ${sample_index}`);
-
-
-      // sample_values =  data.samples[sample_index].sample_values.slice(0,10).reverse();
-      // otu_ids =  data.samples[sample_index].otu_ids.slice(0,10);
-      // yticks = otu_ids.slice(0, 10).map(otuId => `OTU ${otuId}`).reverse();
-      // otu_labels = data.samples[sample_index].otu_labels.slice(0,10);
-  
-      // console.log(`SampleValues: ${sample_values}`)
-      // console.log(`otu_ids: ${otu_ids}`)
-      // console.log(`otu_labels: ${otu_labels}`)
+      console.log(`subjectID1: ${subjectid0}`);
+      console.log(`subjectID2: ${subjectid1}`);
+      console.log(`subjectID3: ${subjectid2}`);
+      console.log(`targetIndex1: ${target_index1}`);
+      console.log(`targetIndex2: ${target_index2}`);
+      
+      state1 = String(data[target_index1].slice(0,1));
+      state2 = String(data[target_index2].slice(0,1));
+      year = String(data[target_index1].slice(1,2));
+    
+      months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      state1_temp = (data[target_index1].slice(2,14));
+      state2_temp = (data[target_index2].slice(2,14));
+      
+      console.log(state1_temp);
       
       // Plotly.restyle("bar","x", [sample_values]);
       // Plotly.restyle("bar","labels", [otu_ids]);
