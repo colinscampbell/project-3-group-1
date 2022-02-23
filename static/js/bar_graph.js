@@ -180,8 +180,7 @@ function updatechart(subjectid0, subjectid1, subjectid2){
 }
 
   init_plot_graphs()
-
-
+  
 
       // Plotly.restyle("bar","x", [sample_values]);
       // Plotly.restyle("bar","labels", [otu_ids]);
