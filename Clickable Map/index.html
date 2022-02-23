@@ -1,0 +1,25 @@
+        <!-- Example Map Above  -->
+        <script src="js/jquery.vmap.js"></script>
+        <script src="js/jquery.vmap.usa.js"></script>
+         
+        <script>
+        jQuery('#vmap').vectorMap({
+            map: 'usa_en',
+            backgroundColor: null,
+            color: '#ffffff',
+            enableZoom: true,
+            showTooltip: true,
+            selectedColor: null,
+            hoverColor: null,
+            colors: {
+                mo: '#2980b9',
+                fl: '#27ae60',
+                or: '#8e44ad'
+            },
+            onRegionClick: function(event, code, region){
+                event.preventDefault();
+            }
+        });
+        </script>
+         
+        <div id="vmap" style="width: 600px; height: 400px;"></div>
