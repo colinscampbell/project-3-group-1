@@ -70,7 +70,10 @@ function init_plot_graphs(){
 // ////////////////////////////////////////////////////////
 // // ---------------------Drop Down LISTENER ------------------
 d3.select("#selDataset0").on("change", dropdown_populate);
+d3.select("#selDataset1").on("change", dropdown_populate);
+d3.select("#selDataset2").on("change", dropdown_populate);
 
+// ////////////////////////////////////////////////////////
 // This function is called when a dropdown menu item is selected
 function dropdown_populate() {
   // Use D3 to select the dropdown menu
