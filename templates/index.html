@@ -51,11 +51,27 @@
     <div id="map"></div>
 
     <!-- Below Added by Prina -->
-    <div class="container">
-      <h2>Bar and Line Graph</h2>
-      <hr>
-     </div>
-    <br>
+    <div class="row">
+      <div class="col-md-2">
+        <div class="well">
+          <h5>State One</h5>
+          <select id="selDataset0" onchange="optionChanged(this.value)"></select>
+        </div>        <div class="well">
+          <h5>State Two</h5>
+          <select id="selDataset1" onchange="optionChanged(this.value)"></select>
+        </div>
+        <div class="well">
+          <h5>Year</h5>
+          <select id="selDataset2" onchange="optionChanged(this.value)"></select>
+        </div>
+        <div class="col-md-5">
+          <div id="bar"></div>
+         </div>
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="../static/js/bar_graph.js"></script>
 
   </body>
 
