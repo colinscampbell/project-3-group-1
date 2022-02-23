@@ -70,7 +70,10 @@ function init_plot_graphs(){
 // ////////////////////////////////////////////////////////
 // // ---------------------Drop Down LISTENER ------------------
 d3.select("#selDataset0").on("change", dropdown_populate);
+d3.select("#selDataset1").on("change", dropdown_populate);
+d3.select("#selDataset2").on("change", dropdown_populate);
 
+// ////////////////////////////////////////////////////////
 // This function is called when a dropdown menu item is selected
 function dropdown_populate() {
   // Use D3 to select the dropdown menu
@@ -138,12 +141,48 @@ function updatechart(subjectid0, subjectid1, subjectid2){
       state2 = String(data[target_index2].slice(0,1));
       year = String(data[target_index1].slice(1,2));
     
-      months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      // months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
       state1_temp = (data[target_index1].slice(2,14));
       state2_temp = (data[target_index2].slice(2,14));
       
       console.log(state1_temp);
       
+      // Create our first trace
+      let trace1 = {
+        x: months,
+        y: state1_temp,
+        name: state1,
+        type: "bar"
+        };
+
+        // Create our second trace
+      let trace2 = {
+        x: months,
+        y: state2_temp,
+        name: state2,
+        type: "bar"
+      };
+
+      var layout = {
+        height: 600,
+        width: 800,
+        barmode: 'group',
+        title: `${state1} vs ${state2} | ${year}`
+      };
+            
+      // The data array consists of both traces
+      let bar_data = [trace1, trace2];
+
+      Plotly.newPlot("bar", bar_data, layout);
+
+      console.log("END updatechart FUNCTION");
+  });
+}
+
+  init_plot_graphs()
+
+
+
       // Plotly.restyle("bar","x", [sample_values]);
       // Plotly.restyle("bar","labels", [otu_ids]);
       // Plotly.restyle("bar","y", [yticks]);
@@ -152,7 +191,3 @@ function updatechart(subjectid0, subjectid1, subjectid2){
       // Plotly.restyle("bubble", "x", [otu_ids]);
       // Plotly.restyle("bubble","y",[sample_values])
       // Plotly.newPlot("bubble", data3, layout2);
-  });
-}
-
-  init_plot_graphs()
