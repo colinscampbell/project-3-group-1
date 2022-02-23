@@ -69,9 +69,9 @@ function init_plot_graphs(){
 
 // ////////////////////////////////////////////////////////
 // // ---------------------Drop Down LISTENER ------------------
-d3.select("#selDataset0").on("change", dropdown_populate);
-d3.select("#selDataset1").on("change", dropdown_populate);
-d3.select("#selDataset2").on("change", dropdown_populate);
+d3.select("#selDataset0").on("change", getData);
+d3.select("#selDataset1").on("change", getData);
+d3.select("#selDataset2").on("change", getData);
 
 // ////////////////////////////////////////////////////////
 // This function is called when a dropdown menu item is selected
@@ -113,6 +113,18 @@ function dropdown_populate() {
   });
 }
 
+function getData() {
+    // Use D3 to select the dropdown menu
+    var dropdownMenu0 = d3.select("#selDataset0");
+    var dropdownMenu1 = d3.select("#selDataset1");
+    var dropdownMenu2 = d3.select("#selDataset2");
+  // Assign the value of the dropdown menu option to a variable
+    var dataset0 = dropdownMenu0.property("value");
+    var dataset1 = dropdownMenu1.property("value");
+    var dataset2 = dropdownMenu2.property("value");
+
+    updatechart(dataset0, dataset1, dataset2);
+}
 
 // ////////////////////////////////////////////////////////
 // // ------------------update graphs using LISTENER-------
@@ -180,14 +192,3 @@ function updatechart(subjectid0, subjectid1, subjectid2){
 }
 
   init_plot_graphs()
-
-
-
-      // Plotly.restyle("bar","x", [sample_values]);
-      // Plotly.restyle("bar","labels", [otu_ids]);
-      // Plotly.restyle("bar","y", [yticks]);
-      // Plotly.restyle("bar","text", [otu_labels]);
-  
-      // Plotly.restyle("bubble", "x", [otu_ids]);
-      // Plotly.restyle("bubble","y",[sample_values])
-      // Plotly.newPlot("bubble", data3, layout2);
