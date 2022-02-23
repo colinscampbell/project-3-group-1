@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>10 States Average Annual Temperature</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>10 States Average Annual Temperature</title>
+  
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  
+       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  </head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/weather_table">Weather_Table</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 jumbotron text-center">
+                <h1>10 States Average Annual Temperature(2012-2021)</h1>
+                <p>Use the interactive charts below to explore the dataset</p>
+                <a href="/api/weather">API Database</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <h2 style="text-align: center;">Average Temperature by Year</h2>
+            <div class="well">
+                <h5>Year</h5>
+                <select id="selDataset_line">
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                    </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-md-12'>
+                <div id="line"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- <script src="../static/js/bar_graph.js"></script> -->
+    <script src="../static/js/line_chart.js"></script>
+
+</body>
+
+</html>

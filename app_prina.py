@@ -58,7 +58,7 @@ app = Flask(__name__)
 def weather_html():
    return render_template("index.html")
 
- # API Routes for Bar Chart #####################################
+ # API database #####################################
 @app.route("/api/weather")
 
 def weather_grid():
@@ -79,8 +79,6 @@ def weather_grid():
     session.close()
 
     return jsonify(df_list)  
-
-# API routes for Weather table    
 
 @app.route("/weather_table")
 def data():
@@ -106,66 +104,6 @@ def weather_table():
     session.close()
 
     return jsonify(df_list)
-
-# Line Chart routes
-#     # API database #####################################
-@app.route("/api/line")
-
-def line_grid():
-    session = Session(engines)
-    results = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
-    df = pd.read_sql_query(results, session.bind)
-
-    States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
-    df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
-    df1 = df1.drop(['Element' , 'County', 'Code','State'] ,  axis=1)
-
-    df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
-    
-    df_avg = df_avg.reset_index()
-
-    df_list = df_avg.values.tolist() # convert data frame to list as datatables only accepts list
-
-    session.close()
-
-    return jsonify(df_list)
-    
-@app.route('/averages')
-def get_averages():
-    return render_template('average_temps.html')
-
-    
-@app.route('/api/averages')
-def averages():
-    engine = create_engine("sqlite:///Datasets//Weather_3.db")
-    state = pd.read_sql_table('State_Code',con=engine)
-    weather = pd.read_sql_table('Weather_Raw',con=engine)
-    df = weather.merge(state,how='inner',left_on='State',right_on='Code')
-    df = df.loc[:,'Year':]
-    df = df[df.Year.between(2011,2021)]
-    df = df.groupby(['Year']).mean().loc[:,'Jan':'Dec']
-    df['combined'] = df.apply(lambda x: list([x['Jan'],
-                                        x['Feb'],
-                                        x['Mar'],
-                                          x['Apr'],
-                                        x['May'],
-                                        x['Jun'],
-                                          x['Jul'],
-                                        x['Aug'],
-                                        x['Sep'],
-                                          x['Oct'],
-                                        x['Nov'],
-                                        x['Dec']
-                                         ]),axis=1) 
-
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-       'Nov', 'Dec']
-
-    datadict = df.combined.to_dict()
-    new_dict ={}
-    for k,v in datadict.items():
-        new_dict[k] = dict(zip(months,datadict[k]))
-    return jsonify(new_dict)
 
 if __name__ == "__main__":
     app.run()   
