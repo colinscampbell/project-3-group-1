@@ -1,19 +1,39 @@
+<<<<<<< HEAD
 from operator import index
+=======
+>>>>>>> prina
 import os
 #from dotenv import load_dotenv
 #load_dotenv()
 from sqlalchemy.sql import func
+<<<<<<< HEAD
 from sqlalchemy import create_engine
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine
 #import matplotlib.pyplot as plt
 #from sqlalchemy import Column, Integer, String, Float
+=======
+from sqlalchemy import create_engine, func, or_
+from sqlalchemy.ext.automap import automap_base
+from sqlalchemy.orm import Session
+import matplotlib.pyplot as plt
+from sqlalchemy import Column, Integer, String, Float
+>>>>>>> prina
 import numpy as np
 import pandas as pd
 
 #Below Flask Import added by Prina##
+<<<<<<< HEAD
 # from flask import ( Flask, Render_template, jsonify, request, redirect)
+=======
+from flask import (
+    Flask,
+    render_template,
+    jsonify,
+    request,
+    redirect)
+>>>>>>> prina
 
 #################################################
 # Database Setup
@@ -32,6 +52,7 @@ Base.classes.keys()
 #print(insp.get_table_names())
 Wtr = Base.classes.Weather_Raw
 St_Cd = Base.classes.State_Code
+<<<<<<< HEAD
 ##### THIS IS THE DATAFRAMA METHOD, IT IS IDENTICAL TO THE SESSION QUERY METHOD BELOW
 join = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
 df = pd.read_sql_query(join, session.bind)
@@ -60,10 +81,23 @@ print(df_avg)
 # # Sending output to a CSV file to get the full picture
 # #df.to_csv(r'C:\Users\georg\project-3-group-1\Datasetsr', index=True, header=True)
 session.close()
+=======
+join = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+df = pd.read_sql_query(join, session.bind)
+
+States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+df1 = df1.drop(['Element' , 'County', 'Code'] ,  axis=1)
+
+df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+df_avg = df1.drop(['State_1'] ,  axis=1)
+
+>>>>>>> prina
 
 #################################################
 # Flask Setup
 #################################################
+<<<<<<< HEAD
 # app = Flask(__name__)
 
 
@@ -111,3 +145,62 @@ session.close()
 
 
 
+=======
+app = Flask(__name__)
+
+# ---------------------------------------------------------
+# Web site
+@app.route("/")
+def weather_html():
+   return render_template("index.html")
+
+ # API database #####################################
+@app.route("/api/weather")
+
+def weather_grid():
+    session = Session(engines)
+    results = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+    df = pd.read_sql_query(results, session.bind)
+
+    States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+    df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+    df1 = df1.drop(['Element' , 'County', 'Code','State'] ,  axis=1)
+
+    df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+    
+    df_avg = df_avg.reset_index()
+
+    df_list = df_avg.values.tolist() # convert data frame to list as datatables only accepts list
+
+    session.close()
+
+    return jsonify(df_list)  
+
+@app.route("/weather_table")
+def data():
+    return render_template("weather_table.html")
+
+# API
+@app.route("/api/weather_table")
+def weather_table():
+    session = Session(engines)
+    results = session.query( Wtr , St_Cd ).filter(Wtr.State == St_Cd.Code).statement
+    df = pd.read_sql_query(results, session.bind)
+
+    States_list = [2, 3, 4, 8, 11, 18, 30, 45, 41,42]
+    df1 = df.loc[((df['Year'] >= 2012) & (df['Year'] <= 2021) & (df['State'].isin(States_list)))] ### this is where put the 10 states and the years that we are planning to use
+    df1 = df1.drop(['Element' , 'County', 'Code','State'] ,  axis=1)
+
+    df_avg = round(df1.groupby(['State_1', 'Year']).mean(), 2)
+    
+    df_avg = df_avg.reset_index()
+
+    df_list = df_avg.values.tolist() # convert data frame to list as datatables only accepts list
+
+    session.close()
+
+    return jsonify(df_list)
+
+if __name__ == "__main__":
+    app.run()   
+>>>>>>> prina

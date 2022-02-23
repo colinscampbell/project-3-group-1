@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="en">
 
 <head>
@@ -44,12 +45,88 @@
         <div id="bubble"></div>
       </div>
     </div>
+=======
+<html lang="en-us">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>US Weather Data Table</title>
+  
+    
+        <!-- D3 library -->
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+      <!-- below bootstrap added by prina -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+   
+    <!-- Our CSS  -->
+    <link rel="stylesheet" href="./static/css/style.css" />
+
+    <div class="container">
+
+      <div class="row">
+    
+        <div class="col-md-12 jumbotron text-center">
+          <h1>Weather Visualization Chart</h1>
+          <p>Explore the weather for 10 states and 10 years</p>
+          <p>Created By: Colin, Etienne, Hamilton, Jason, Jorge, Prina</p>
+        </div>
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Bar and Line Graphs</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/weather_table">Weather_Table</a>
+            </li>
+           </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <div id="map"></div>
+
+    <!-- Below Added by Prina -->
+    <div class="row">
+      <div class="col-md-2">
+        <div class="well">
+          <h5>State One</h5>
+          <select id="selDataset0" onchange="optionChanged(this.value)"></select>
+        </div>        <div class="well">
+          <h5>State Two</h5>
+          <select id="selDataset1" onchange="optionChanged(this.value)"></select>
+        </div>
+        <div class="well">
+          <h5>Year</h5>
+          <select id="selDataset2" onchange="optionChanged(this.value)"></select>
+        </div>
+        <div class="col-md-5">
+          <div id="bar"></div>
+         </div>
+>>>>>>> prina
   </div>
 
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<<<<<<< HEAD
   <script src="./static/js/app.js"></script>
   <!-- <script src="./static/js/bonus.js"></script> -->
 </body>
+=======
+  <script src="../static/js/bar_graph.js"></script>
+
+  </body>
+>>>>>>> prina
 
 </html>
