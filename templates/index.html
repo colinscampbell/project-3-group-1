@@ -37,7 +37,7 @@
 
   <div class="container">
       <div class="row">
-          <div class="col-md-8 jumbotron text-center">
+          <div class="col-md-12 jumbotron text-center">
               <h1>Average Weather Visualization</h1>
               <p>Use the interactive charts below to explore the dataset</p>
            </div>
@@ -46,27 +46,27 @@
       <div id="map"></div>
 
     <!-- Below Added by Prina -->
-    <div class="container">
+  <div class="container">
     <div class="row">
       <div class="col-md-2">
         <div class="well">
           <h5>State One</h5>
           <select id="selDataset0" onchange="optionChanged(this.value)"></select>
-         </div>        
+        </div>        
         <div class="well">
           <h5>State Two</h5>
           <select id="selDataset1" onchange="optionChanged(this.value)"></select>
         </div>
-       <!-- <div class="well">-->
+        <div class="well">
           <h5>Year</h5>
           <select id="selDataset2" onchange="optionChanged(this.value)"></select>
-       <!-- </div>-->
-        <div class="col-md-5">
+        </div>
+      </div>
+      <div class="col-md-10">
           <div id="bar"></div>
-         </div>
-        </div>
-        </div>
-</div>
+      </div>    
+    </div>
+  </div>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="../static/js/bar_graph.js"></script>
