@@ -12,5 +12,9 @@ body {
   }
 
   #bar{
-    float: right;
+    /* float: right; */
+  }
+
+  .bkgrdclr{
+    background-color: lightblue;
   }

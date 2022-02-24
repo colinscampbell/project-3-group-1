@@ -42,18 +42,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 jumbotron text-center">
-                <h1>10 States Average Annual Temperature(2012-2021)</h1>
+              <div class="bkgrdclr">
+                <h1>Average Monthly Temperature for All Ten States by Year (2012-2021)</h1>
+                <h4>AZ, AK, CA, FL, IL, MD, NY, TX, UT, WA</h4>
                 <p>Use the interactive charts below to explore the dataset</p>
-                <a href="/api/weather">API Database</a>
+                <p>Source: <a href="/api/line" target="_blank">API Database</a></p>
+              </div>
             </div>
         </div>
 
         <div class="row">
-            <h2 style="text-align: center;">Average Temperature by Year</h2>
+            <h2 style="text-align: center;">Average Monthly Temperature by Year</h2>
             <div class="well">
                 <h5>Year</h5>
                 <select id="selDataset_line">
-                        <option value="2011">2011</option>
+                        <!-- <option value="2011">2011</option> -->
                         <option value="2012">2012</option>
                         <option value="2013">2013</option>
                         <option value="2014">2014</option>

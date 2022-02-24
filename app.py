@@ -142,7 +142,7 @@ def averages():
     weather = pd.read_sql_table('Weather_Raw',con=engine)
     df = weather.merge(state,how='inner',left_on='State',right_on='Code')
     df = df.loc[:,'Year':]
-    df = df[df.Year.between(2011,2021)]
+    df = df[df.Year.between(2012,2021)]
     df = df.groupby(['Year']).mean().loc[:,'Jan':'Dec']
     df['combined'] = df.apply(lambda x: list([x['Jan'],
                                         x['Feb'],
